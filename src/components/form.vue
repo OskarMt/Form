@@ -3,7 +3,7 @@
     <button id="show-modal" @click="showModal = true">Show Modal</button>
 
     <div class="modal-window" :class="{ show: showModal }">
-      <form class="form" @submit="checkForm">
+      <form class="form" @submit.prevent="checkForm">
 
        <!--HEADER-->
         <div class="header">
@@ -41,7 +41,7 @@
         </div>
 
         <!--COMMENTARY-->
-        <textarea type="text" maxlength="500" placeholder="Комментарий" class="commentary" v-model="commentary"></textarea>
+        <textarea type="text" maxlength="500" placeholder="Комментарий" class="commentary" :class="{error:showError}" v-model="commentary"></textarea>
         <div class="commentary-counter">{{ letterCounter }}/500</div>
 
         <!--ALBUM-IMGS-->
@@ -55,22 +55,18 @@
 
         <!--FOOTER-->
         <div class="footer">
-          <input class="footer__btn" type="submit" value="Отправить">
+          <input class="footer__btn" type="submit" value="Отправить" >
         </div>
-
-        <p v-if="errors.length">
-          <b>Пожалуйста заполните необходимые поля</b>
-          <ul>
-            <li v-for="error in errors" :key="error">{{ error }}</li>
-          </ul>
-        </p>
-
-        <p class="alert">Спасибо, отзыв опубликован!</p>
-
 
       </form>
     </div><!--/MODAL-WINDOW-->
-  </div><!--//MODAL-->
+
+    <!--ALERT-->
+    <p class="alert-submit" :class="{active:showSuccessAlert}">Спасибо, отзыв опубликован!</p>
+    <p class="alert-error" :class="{active:showErrorAlert}">Заполните необходимые поля</p>
+
+
+  </div><!--/MODAL-->
 </template>
 
 <script>
@@ -83,26 +79,34 @@ export default {
     return{
       showModal:false,
       commentary:"",
-      errors:[],
+      showSuccessAlert:false,
+      showErrorAlert:false,
+      showError:false
     }
   },
   components: {
       stars
   },
   methods:{
-    checkForm: function(e) {
+    checkForm: function() {
+
+      /*Валидация блока комментариев*/
       if(this.commentary){
+        this.showModal = false
+        this.showSuccessAlert = true;
+        setTimeout(()=>{
+          this.showSuccessAlert = false;
+        }, 2000);
         return true;
+      }else{
+        this.showError = true;
+        this.showErrorAlert = true;
+        setTimeout(()=>{
+          this.showErrorAlert = false;
+        }, 2000);
       }
+    }
 
-      this.errors = [];
-
-      if(!this.commentary){
-        this.errors.push('Напишите комментарий.');
-      }
-
-      e.preventDefault();
-    },
 
   },
   computed:{

@@ -27,7 +27,6 @@ export default{
     }
 }
 
-
 </script>
 
 
@@ -40,6 +39,5 @@ export default{
     .stars__item:last-child{
         margin-right: 0;
     }
-
 
 </style>
