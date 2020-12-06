@@ -18,8 +18,12 @@ body{
 
 /*MODAL*/
 
+#modal{
+  width: 100%;
+  height: 100%;
+}
 
-#show-modal{
+#show-modal__btn{
   @include fontBold;
   font-size: 26px;
   color:#fff;
@@ -40,7 +44,7 @@ body{
   transition: background-color .2s ease-in-out;
 }
 
-#show-modal:hover{
+#show-modal__btn:hover{
   background-color: #46a3ac;
 }
 
@@ -64,6 +68,8 @@ body{
   transition: opacity .4s linear;
 }
 
+
+
 .modal-window.show{
   opacity: 1;
   z-index: 2;
@@ -76,11 +82,6 @@ body{
   opacity: 0;
 
   transform: translateY(-30px);
-
-//  position: absolute;
-//  left: 50%;
-//  top: 45%;
-//  transform: translate(-50%,-50%);
 
   transition: all .4s linear;
   }
@@ -100,6 +101,21 @@ body{
   @include flex;
   border-bottom: 1px solid $greyColor;
   color:$darkGreyColor;
+  position: relative;
+}
+
+.header:before{
+  content: "";
+  display: none;
+  width: 24px;
+  height: 3px;
+  background-color:#CFD3DD;
+  border-radius: 4px;
+
+  position: absolute;
+  left: 50%;
+  top: 4px;
+  transform: translateX(-50%);
 }
 
 .header__title{
@@ -170,6 +186,11 @@ body{
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
+  margin: 32px 32px 0 32px;
+
+  border:1px solid transparent;
+  border-radius: 6px;
+
 }
 
 .rating-item{
@@ -179,7 +200,6 @@ body{
 
 .rating-item:nth-child(1),
 .rating-item:nth-child(3){
-  margin-left: 32px;
   margin-right: 57px;
 }
 
@@ -190,7 +210,7 @@ body{
 
 .rating-item:nth-child(2) .rating-item__title,
 .rating-item:nth-child(4) .rating-item__title{
-  margin-right: 135px;
+  margin-right: 103px;
 }
 
 
@@ -211,6 +231,7 @@ body{
   display: flex;
   justify-content: flex-end;
   padding: 16px;
+  border-top: 1px solid $greyColor;
 
 }
 
@@ -375,8 +396,13 @@ body{
 /*MEDIA
 =================*/
 
-@media (max-width:800px){
+@media (max-width:320px){
 
+
+
+  .header:before{
+    display: block;
+  }
 
 
   .first-chapter{
@@ -451,17 +477,19 @@ body{
   /*RATING*/
 
   .rating{
-    margin-top: 0;
+    margin: 0 16px;
+    margin-top: 8px;
+
   }
 
   .rating-item{
     margin-bottom: 22.67px;
-    margin-left: 16px;
+    margin-left: 0;
   }
 
   .rating-item:nth-child(1),
   .rating-item:nth-child(3){
-    margin-left: 16px;
+    margin-left: 0;
     margin-right: 0;
   }
 
@@ -476,7 +504,7 @@ body{
 
   .rating-item:nth-child(2) .rating-item__title,
   .rating-item:nth-child(4) .rating-item__title{
-    margin-right: 12px;
+    margin-right: 0;
   }
 
   .rating-item__title{

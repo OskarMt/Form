@@ -24,6 +24,10 @@ export default{
         star
     },
 
+    props:{
+
+    },
+
     data(){
         return{
             currentRating:0,
@@ -48,6 +52,17 @@ export default{
       returnSelectedRating(){
         this.currentRating = this.hoverRating
       },
+
+      /*Обнуление рейтинга при закрытии, отправке формы*/
+
+      resetRating(){
+        this.hoverRating = 0
+        this.currentRating = 0
+      },
+
+      getRating(){
+        return this.currentRating
+      }
 
     }
 

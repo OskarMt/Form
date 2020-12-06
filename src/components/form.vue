@@ -1,6 +1,6 @@
 <template>
   <div id="modal">
-    <button id="show-modal" @click="showModal = true" @mousedown="updateWindowWidth">Show Modal</button>
+    <button id="show-modal__btn" @click="showModal = true" @mousedown="updateWindowWidth">Show Modal</button>
 
     <div class="modal-window" :class="{ show: showModal }">
       <form class="form" :class="{second:showSecondChapter}" @submit.prevent="checkForm">
@@ -12,7 +12,7 @@
 
           <div class="header">
             <div class="header__title">Мой отзыв</div>
-            <img src="@/assets/images/Union.png" class="header__close" @click="showModal = false, showTextError = false, commentary = '' "/>
+            <img src="@/assets/images/Union.png" class="header__close" @click="showModal = false, showTextError = false, commentary = '', showRatingError = false" @mousedown="clearRating"/>
           </div>
 
           <!--ALBUM-->
@@ -25,22 +25,22 @@
           </div>
 
           <!--RATING-->
-          <div class="rating" :class="{error:showRatingError}">
+          <div class="rating"  :class="{error:showRatingError}" @mouseout="checkStarRating">
             <div class="rating-item">
               <h3 class="rating-item__title">Скорость</h3>
-              <stars ref="star1"></stars>
+              <stars ref="stars1"></stars>
             </div>
             <div class="rating-item">
               <h3 class="rating-item__title">Скорость отдачи видео</h3>
-              <stars ref="star2"></stars>
+              <stars ref="stars2"></stars>
             </div>
             <div class="rating-item">
               <h3 class="rating-item__title">Качество</h3>
-              <stars ref="star3"></stars>
+              <stars ref="stars3"></stars>
             </div>
             <div class="rating-item">
               <h3 class="rating-item__title">Пунктуальность</h3>
-              <stars ref="star4"></stars>
+              <stars ref="stars4"></stars>
             </div>
           </div>
 
@@ -118,30 +118,61 @@ export default {
       stars
   },
   methods:{
+
+    clearRating(){
+      this.$refs.stars1.resetRating();
+      this.$refs.stars2.resetRating();
+      this.$refs.stars3.resetRating();
+      this.$refs.stars4.resetRating();
+    },
+
+    /*Уведомление об ошибке*/
+    showError(){
+      this.showErrorAlert = true;
+      setTimeout(()=>{
+        this.showErrorAlert = false;
+      }, 2000);
+    },
+
     checkForm() {
 
-      /*Валидация блока комментариев*/
-      if(this.commentary){
-        this.showModal = false
+      /*Валидация комментариев*/
+      if(!this.commentary){
+        this.showTextError = true;
+        this.showError();
+
+        /*Валидация звездного рейтинга*/
+      }else if(this.$refs.stars1.getRating() == 0 || this.$refs.stars2.getRating() == 0 || this.$refs.stars3.getRating() == 0 || this.$refs.stars4.getRating() == 0){
+        this.showRatingError = true
+        this.showError();
+
+      }else{
+        this.showTextError = false;
+        this.showRatingError = false;
+        this.showModal = false;
+        this.commentary = "";
+        this.clearRating();
 
         this.showSuccessAlert = true;
-        this.commentary = ""
         setTimeout(()=>{
           this.showSuccessAlert = false;
         }, 2000);
-        return true;
-      }else{
-        this.showTextError = true;
-
-        this.showErrorAlert = true;
-        setTimeout(()=>{
-          this.showErrorAlert = false;
-        }, 2000);
+        return true
       }
+
     },
+
+    /*Проверка блока комментариев при потере фокуса*/
     checkTextArea(){
       if(this.commentary){
         this.showTextError = false;
+      }
+    },
+
+    /*Проверка звездного рейтинга при потере фокуса*/
+    checkStarRating(){
+      if(!(this.$refs.stars1.getRating() == 0 || this.$refs.stars2.getRating() == 0 || this.$refs.stars3.getRating() == 0 || this.$refs.stars4.getRating() == 0)){
+        this.showRatingError = false;
       }
     },
 
@@ -156,9 +187,12 @@ export default {
       }
     }
   },
-    created(){
-      window.addEventListener('resize', this.updateWindowWidth);
-    },
+
+  created(){
+    window.addEventListener('resize', this.updateWindowWidth);
+  },
+
+  /*Счетчик символов в комментарии*/
   computed:{
     letterCounter(){
       return this.commentary.length
