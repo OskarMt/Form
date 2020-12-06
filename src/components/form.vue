@@ -69,11 +69,25 @@
 
           <!--ALBUM-IMGS-->
           <div class="album-imgs">
-            <img class="album-imgs__img" src="@/assets/images/addImgBtn.png" alt="">
-            <img class="album-imgs__img" src="@/assets/images/albumImg1.jpg" alt="">
-            <img class="album-imgs__img" src="@/assets/images/albumImg2.jpg" alt="">
-            <img class="album-imgs__img" src="@/assets/images/albumImg3.jpg" alt="">
-            <img class="album-imgs__img" src="@/assets/images/albumImg4.jpg" alt="">
+            <div class="album-imgs__img">
+              <img class="album-imgs__img" src="@/assets/images/addImgBtn.png" alt="">
+            </div>
+            <div class="album-imgs__img">
+              <div class="album-imgs__delete"><img src="@/assets/images/delete.png" alt=""></div>
+              <img class="album-imgs__img" src="@/assets/images/albumImg1.jpg" alt="">
+            </div>
+            <div class="album-imgs__img">
+              <div class="album-imgs__delete"><img src="@/assets/images/delete.png" alt=""></div>
+              <img class="album-imgs__img" src="@/assets/images/albumImg2.jpg" alt="">
+            </div>
+            <div class="album-imgs__img">
+              <div class="album-imgs__delete"><img src="@/assets/images/delete.png" alt=""></div>
+              <img class="album-imgs__img" src="@/assets/images/albumImg3.jpg" alt="">
+            </div>
+            <div class="album-imgs__img">
+              <div class="album-imgs__delete"><img src="@/assets/images/delete.png" alt=""></div>
+              <img class="album-imgs__img" src="@/assets/images/albumImg4.jpg" alt="">
+            </div>
           </div>
 
           <!--FOOTER-->
